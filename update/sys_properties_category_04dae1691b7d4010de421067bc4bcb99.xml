@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties_category">
+    <sys_properties_category action="INSERT_OR_UPDATE">
+        <name>NeedIt Properties</name>
+        <sys_class_name>sys_properties_category</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-12-18 10:28:42</sys_created_on>
+        <sys_id>04dae1691b7d4010de421067bc4bcb99</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>NeedIt Properties</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_properties_category_04dae1691b7d4010de421067bc4bcb99</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-12-18 10:28:42</sys_updated_on>
+        <title><![CDATA[<p><img style="align: baseline;" title="Ceci est un tooltip" src="38582B32-69B2-49F8-8B92-78D397F05767.jpegx" alt="alt rext" width="326" height="244" align="baseline" border="" hspace="" vspace="" /><em><strong>boldtext</strong></em></p>]]></title>
+    </sys_properties_category>
+    <sys_translated_text action="delete_multiple" query="documentkey=04dae1691b7d4010de421067bc4bcb99"/>
+</record_update>
