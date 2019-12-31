@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="DELETE">
+        <active>true</active>
+        <consumes>application/json</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>GET</http_method>
+        <name>ni_query</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+// implement resource here
+
+
+// Get value from the user_name path parameter passed in the URL
+var requestUser = request.pathParams.user_name;
+// Get value of the ni_query query parameter passed in the URL
+var requestNIQuery = request.queryParams.ni_query;
+
+// Query the sys_user table to get the user record for the user passed in
+// the user_id path parameter.  
+var requestUserName = new GlideRecord('sys_user');
+requestUserName.get('user_name',requestUser);
+
+
+
+// Get the count of active NeedIt table records where the user from the
+// user_name path parameter is the Requested for.  The encoded query is from the
+// Query Parameter Associations.  Group by category.
+var userNICount = new GlideAggregate('x_58872_needit_needit');
+userNICount.addAggregate('COUNT');
+userNICount.addQuery('u_requested_for',requestUserName.sys_id);
+userNICount.addEncodedQuery(requestNIQuery);
+userNICount.groupBy('u_request_type');
+userNICount.query();
+
+
+var needitRecs = 0;
+var niUserRecs = [];
+var needitRecsCount = 0;
+
+while (userNICount.next()) {
+	needitRecs = userNICount.getAggregate('COUNT');
+	var reqType = userNICount.u_request_type.getDisplayValue();
+	niUserRecs.push({"requestType": reqType, "count": needitRecs});
+	needitRecsCount = parseInt(needitRecsCount) + parseInt(needitRecs);
+}
+	
+//Create a body object.  Add property value pairs to the body.
+var body = {};
+body.totalUserNIRecs = needitRecsCount;
+body.catCounts = niUserRecs;
+body.user = {"User name": requestUserName.user_name,
+"User ID": requestUserName.sys_id};
+			
+// Send the response object, which is returned to the requestor, to the body object.
+response.setBody(body);
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_58872_needit/needit_api</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description>Encoded query for searching for specific NeedIt records</short_description>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-12-29 07:53:02</sys_created_on>
+        <sys_id>3a21b98d1b86c010de421067bc4bcb17</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>ni_query</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_ws_operation_3a21b98d1b86c010de421067bc4bcb17</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-12-31 08:29:22</sys_updated_on>
+        <web_service_definition display_value="NeedIt API">9b0ced4d1b86c010de421067bc4bcb23</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</application>
+        <file_path/>
+        <instance_id>7bf10795db5b7f48f492c59705961941</instance_id>
+        <instance_name>dev91643</instance_name>
+        <name>sys_ws_operation_3a21b98d1b86c010de421067bc4bcb17</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_ws_operation"&gt;&lt;sys_ws_operation action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;consumes&gt;application/json&lt;/consumes&gt;&lt;consumes_customized&gt;false&lt;/consumes_customized&gt;&lt;default_operation_uri/&gt;&lt;enforce_acl&gt;cf9d01d3e73003009d6247e603f6a990&lt;/enforce_acl&gt;&lt;http_method&gt;GET&lt;/http_method&gt;&lt;name&gt;ni_query&lt;/name&gt;&lt;operation_script&gt;&lt;![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+// implement resource here
+
+
+// Get value from the user_name path parameter passed in the URL
+var requestUser = request.pathParams.user_name;
+// Get value of the ni_query query parameter passed in the URL
+var requestNIQuery = request.queryParams.ni_query;
+
+// Query the sys_user table to get the user record for the user passed in
+// the user_id path parameter.  
+var requestUserName = new GlideRecord('sys_user');
+requestUserName.get('user_name',requestUser);
+
+
+
+// Get the count of active NeedIt table records where the user from the
+// user_name path parameter is the Requested for.  The encoded query is from the
+// Query Parameter Associations.  Group by category.
+var userNICount = new GlideAggregate('x_58872_needit_needit');
+userNICount.addAggregate('COUNT');
+userNICount.addQuery('u_requested_for',requestUserName.sys_id);
+userNICount.addEncodedQuery(requestNIQuery);
+userNICount.groupBy('u_request_type');
+userNICount.query();
+
+
+var needitRecs = 0;
+var niUserRecs = [];
+var needitRecsCount = 0;
+
+while (userNICount.next()) {
+	needitRecs = userNICount.getAggregate('COUNT');
+	var reqType = userNICount.u_request_type.getDisplayValue();
+	niUserRecs.push({"requestType": reqType, "count": needitRecs});
+	needitRecsCount = parseInt(needitRecsCount) + parseInt(needitRecs);
+}
+	
+//Create a body object.  Add property value pairs to the body.
+var body = {};
+body.totalUserNIRecs = needitRecsCount;
+body.catCounts = niUserRecs;
+body.user = {"User name": requestUserName.user_name,
+"User ID": requestUserName.sys_id};
+			
+// Send the response object, which is returned to the requestor, to the body object.
+response.setBody(body);
+
+})(request, response);]]&gt;&lt;/operation_script&gt;&lt;operation_uri&gt;/api/x_58872_needit/needit_api&lt;/operation_uri&gt;&lt;produces&gt;application/json,application/xml,text/xml&lt;/produces&gt;&lt;produces_customized&gt;false&lt;/produces_customized&gt;&lt;relative_path&gt;/&lt;/relative_path&gt;&lt;request_example/&gt;&lt;requires_acl_authorization&gt;true&lt;/requires_acl_authorization&gt;&lt;requires_authentication&gt;true&lt;/requires_authentication&gt;&lt;requires_snc_internal_role&gt;true&lt;/requires_snc_internal_role&gt;&lt;short_description&gt;Encoded query for searching for specific NeedIt records&lt;/short_description&gt;&lt;sys_class_name&gt;sys_ws_operation&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2019-12-29 07:53:02&lt;/sys_created_on&gt;&lt;sys_id&gt;3a21b98d1b86c010de421067bc4bcb17&lt;/sys_id&gt;&lt;sys_mod_count&gt;4&lt;/sys_mod_count&gt;&lt;sys_name&gt;ni_query&lt;/sys_name&gt;&lt;sys_package display_value="NeedIt" source="x_58872_needit"&gt;6ead8e780f603200cd674f8ce1050ed1&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="NeedIt"&gt;6ead8e780f603200cd674f8ce1050ed1&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ws_operation_3a21b98d1b86c010de421067bc4bcb17&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-12-31 08:29:22&lt;/sys_updated_on&gt;&lt;web_service_definition display_value="NeedIt API"&gt;9b0ced4d1b86c010de421067bc4bcb23&lt;/web_service_definition&gt;&lt;web_service_version/&gt;&lt;/sys_ws_operation&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-591273300</payload_hash>
+        <record_name>ni_query</record_name>
+        <reverted_from/>
+        <source>6498ec0d1b82c010de421067bc4bcb5b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-12-31 08:29:22</sys_created_on>
+        <sys_id>b7cc083d1b4e4410de421067bc4bcbfc</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>16f5b12e3230000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-12-31 08:29:22</sys_updated_on>
+        <type>Scripted REST Resource</type>
+        <update_guid>ffcc083d844e441039d234af54f7dbfb</update_guid>
+        <update_guid_history>ffcc083d844e441039d234af54f7dbfb:-591273300,358a40bdfb4e4410ea09065569126cc7:-599329961,beb9c4f57c4e44104237a2a36cd800af:69172602,3dc484f5d94e4410cecd2e69c02e4fea:-599329961,1051f501c0c6c0101055fb022f2bded9:1749915148</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-12-31 08:31:12</sys_created_on>
+        <sys_db_object display_value="" name="sys_ws_operation">sys_ws_operation</sys_db_object>
+        <sys_id>6b18b57f97f843f6ae6683fcfc86de29</sys_id>
+        <sys_metadata>3a21b98d1b86c010de421067bc4bcb17</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ni_query</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_scope_delete display_value="">94872a8897db403e8ee69a431de2fca4</sys_scope_delete>
+        <sys_update_name>sys_ws_operation_3a21b98d1b86c010de421067bc4bcb17</sys_update_name>
+        <sys_update_version display_value="sys_ws_operation_3a21b98d1b86c010de421067bc4bcb17">b7cc083d1b4e4410de421067bc4bcbfc</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-12-31 08:31:12</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
